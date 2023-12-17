@@ -3,7 +3,8 @@ import reducer from './reducer'
 
 const initailState = {
     currentUser: null,
-    openLogin: false
+    openLogin: false,
+    alert: {open: false, severity: 'info', message: ''}
 }
 
 const Context = createContext(initailState)

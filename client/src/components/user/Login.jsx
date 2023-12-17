@@ -25,6 +25,21 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+
+        // for testing notification alert
+        const password = passwordRef.current.value
+        const confirmPassword = confirmPasswordRef.current.value
+
+        if (password !== confirmPassword) {
+            dispatch({
+                type: 'UPDATE_ALERT',
+                payload: {
+                    open: true,
+                    severity: 'error',
+                    message: 'Passwords do not match'
+                }
+            })
+        }
     }
 
     // useEffect(() => {
@@ -120,7 +135,7 @@ const Login = () => {
                         {isRegister ? 'Login' : 'Register'}
                     </Button>
                 </DialogActions>
-                
+
                 {/* Login with google */}
                 <DialogActions sx={{ justifyContent: 'center', py: '24px' }}>
                     <GoogleOneTapLogin />
