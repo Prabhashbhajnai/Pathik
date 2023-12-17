@@ -4,7 +4,10 @@ import { Close, Send } from '@mui/icons-material';
 
 // Context
 import { useValue } from '../../context/contextProvider'
+
+// Components
 import PasswordField from './PasswordField';
+import GoogleOneTapLogin from './GoogleOneTapLogin';
 
 const Login = () => {
     const { state: { openLogin }, dispatch } = useValue()
@@ -116,6 +119,11 @@ const Login = () => {
                     <Button onClick={() => setIsRegister(!isRegister)}>
                         {isRegister ? 'Login' : 'Register'}
                     </Button>
+                </DialogActions>
+                
+                {/* Login with google */}
+                <DialogActions sx={{ justifyContent: 'center', py: '24px' }}>
+                    <GoogleOneTapLogin />
                 </DialogActions>
             </Dialog>
         </>
