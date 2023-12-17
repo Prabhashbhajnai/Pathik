@@ -26,6 +26,12 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
+        // for testing Loading
+        dispatch({ type: 'START_LOADING' })
+        setTimeout(() => {
+            dispatch({ type: 'END_LOADING' })
+        }, 6000)
+
         // for testing notification alert
         const password = passwordRef.current.value
         const confirmPassword = confirmPasswordRef.current.value
@@ -118,7 +124,7 @@ const Login = () => {
                     </DialogContent>
 
                     {/* Submit Button */}
-                    <DialogActions>
+                    <DialogActions sx={{ px: '19px' }}>
                         <Button type='submit' variant='contained' endIcon={<Send />}>
                             Submit
                         </Button>

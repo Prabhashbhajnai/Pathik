@@ -4,6 +4,7 @@ import reducer from './reducer'
 const initailState = {
     currentUser: null,
     openLogin: false,
+    loading: false,
     alert: {open: false, severity: 'info', message: ''}
 }
 
