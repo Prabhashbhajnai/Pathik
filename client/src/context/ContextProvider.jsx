@@ -2,7 +2,8 @@ import React, { createContext, useContext, useReducer } from 'react'
 import reducer from './reducer'
 
 const initailState = {
-    currentUser: null
+    currentUser: null,
+    openLogin: false
 }
 
 const Context = createContext(initailState)

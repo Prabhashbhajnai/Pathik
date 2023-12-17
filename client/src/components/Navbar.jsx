@@ -2,6 +2,8 @@ import React from 'react'
 import { AppBar, Container, Toolbar, Box, IconButton, Typography, Button } from '@mui/material'
 import { Menu, Lock } from '@mui/icons-material'
 import { useValue } from '../context/contextProvider'
+
+// Components
 import UserIcons from './user/UserIcons'
 
 const user = {
@@ -39,11 +41,13 @@ const Navbar = () => {
                             >
                                 YRW
                             </Typography>
+
+                            {/* if current user is logged in the show user icons else login button */}
                             {!currentUser ? (
                                 <Button
                                     color='inherit'
                                     startIcon={<Lock />}
-                                    onClick={() => dispatch({ type: 'UPDATE_USER', payload: user })}
+                                    onClick={() => dispatch({ type: 'OPEN_LOGIN' })}
                                 >
                                     Login
                                 </Button>
