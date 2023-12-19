@@ -1,8 +1,10 @@
 import express from 'express'
 import dotenv from 'dotenv'
+import mongoose from 'mongoose'
 
 // Microservise routes
 import roomRouter from './routes/roomRouter.js'
+import userRouter from './routes/userRouter.js'
 
 dotenv.config()
 
@@ -23,6 +25,7 @@ app.use(express.json({ limit: '10mb' }))
 
 // Application Routes
 app.use('/room', roomRouter)
+app.use('/user', userRouter)
 
 app.use('/', (req, res) => res.json({ message: 'Welcome to the server' }))
 app.use((req, res) => res.status(404).json({ success: false, message: 'Not Found' }));
@@ -30,6 +33,7 @@ app.use((req, res) => res.status(404).json({ success: false, message: 'Not Found
 
 const startServer = async () => {
     try {
+        await mongoose.connect(process.env.MONGO_CONNECT)
         app.listen(port, () => console.log(`Server is listening on port ${port}`))
     } catch (error) {
         console.log(error)
