@@ -3,7 +3,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import { Close, Send } from '@mui/icons-material';
 
 // Context
-import { useValue } from '../../context/contextProvider'
+import { useValue } from '../../context/ContextProvider'
 
 // Components
 import PasswordField from './PasswordField';

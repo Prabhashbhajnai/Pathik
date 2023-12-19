@@ -1,10 +1,19 @@
 import React, { useState } from 'react'
 import { Box, IconButton, Badge, Tooltip, Avatar } from '@mui/material'
 import { Mail, Notifications } from '@mui/icons-material'
-import { useValue } from '../../context/contextProvider'
+
+// Context
+import { useValue } from '../../context/ContextProvider'
+
+// Hooks
+import useCheckToken from '../../hooks/useCheckToken'
+
+// Components
 import UserMenu from './UserMenu'
 
 const UserIcons = () => {
+    useCheckToken()
+
     const { state: { currentUser } } = useValue()
 
     const [anchorUserMenu, setAnchorUserMenu] = useState(null)

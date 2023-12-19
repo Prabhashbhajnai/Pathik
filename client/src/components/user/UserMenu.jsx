@@ -1,9 +1,16 @@
 import React from 'react'
 import { Menu, MenuItem, ListItemIcon } from '@mui/material'
 import { Logout, Settings } from '@mui/icons-material'
-import { useValue } from '../../context/contextProvider'
+
+// Context
+import { useValue } from '../../context/ContextProvider'
+
+// Hooks
+import useCheckToken from '../../hooks/useCheckToken'
 
 const UserMenu = ({ anchorUserMenu, setAnchorUserMenu }) => {
+    useCheckToken()
+
     const { state: { currentUser }, dispatch } = useValue()
 
     const handleCloseUserMenu = () => {
