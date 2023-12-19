@@ -1,6 +1,9 @@
 import express from 'express'
 import dotenv from 'dotenv'
 
+// Microservise routes
+import roomRouter from './routes/roomRouter.js'
+
 dotenv.config()
 
 const port = process.env.PORT || 5000
@@ -14,11 +17,16 @@ app.use((req, res, next) => {
     next()
 })
 
+// Middleware
 // To avoid dos attack
 app.use(express.json({ limit: '10mb' }))
 
+// Application Routes
+app.use('/room', roomRouter)
+
 app.use('/', (req, res) => res.json({ message: 'Welcome to the server' }))
 app.use((req, res) => res.status(404).json({ success: false, message: 'Not Found' }));
+
 
 const startServer = async () => {
     try {
