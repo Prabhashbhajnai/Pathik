@@ -5,6 +5,9 @@ import { Close, Send } from '@mui/icons-material';
 // Context
 import { useValue } from '../../context/ContextProvider'
 
+// Actions
+import { register } from '../../actions/user';
+
 // Components
 import PasswordField from './PasswordField';
 import GoogleOneTapLogin from './GoogleOneTapLogin';
@@ -26,29 +29,25 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        // for testing Loading
-        dispatch({ type: 'START_LOADING' })
-        setTimeout(() => {
-            dispatch({ type: 'END_LOADING' })
-        }, 6000)
-
-        // for testing notification alert
+        // extract values from refs
+        const email = emailRef.current.value
         const password = passwordRef.current.value
-        const confirmPassword = confirmPasswordRef.current.value
+
+        // extract only if registering
+        const name = nameRef.current?.value
+        const confirmPassword = confirmPasswordRef.current?.value
 
         if (password !== confirmPassword) {
-            dispatch({
-                type: 'UPDATE_ALERT',
-                payload: {
-                    open: true,
-                    severity: 'error',
-                    message: 'Passwords do not match'
-                }
+            return dispatch({
+                type: UPDATE_ALERT,
+                payload: { open: true, severity: 'error', message: 'Passwords do not match' }
             })
         }
+
+        register({ name, email, password }, dispatch)
     }
 
-    // useEffect(() => {
+    // useEffect(() => { 
     //     isRegister ? setTitle('Register') : setTitle('Login')
     // }, [isRegister])
 
