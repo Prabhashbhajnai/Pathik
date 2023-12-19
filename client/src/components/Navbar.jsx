@@ -6,11 +6,6 @@ import { useValue } from '../context/contextProvider'
 // Components
 import UserIcons from './user/UserIcons'
 
-const user = {
-    name: 'John Doe',
-    photoUrl: "../../public/profile-placeholder.svg"
-}
-
 const Navbar = () => {
     const { state: { currentUser }, dispatch } = useValue()
 
