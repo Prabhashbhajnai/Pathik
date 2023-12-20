@@ -7,6 +7,7 @@ import tryCatch from './utils/tryCatch.js'
 // Models
 import User from '../models/User.js'
 
+// Signup
 export const register = tryCatch(async (req, res) => {
     const { name, email, password } = req.body
 
@@ -48,4 +49,38 @@ export const register = tryCatch(async (req, res) => {
     )
 
     res.status(201).json({ success: true, result: { id, name, email: user.email, photoUrl, token } })
+})
+
+// Login
+export const login = tryCatch(async (req, res) => {
+    const { email, password } = req.body
+
+    const emailLowerCase = email.toLowerCase()
+    const existingUser = await User.findOne({ email: emailLowerCase })
+
+    if (!existingUser)
+        return res
+            .status(404)
+            .json({ success: false, message: 'User does not exist!' })
+
+    const correctPassword = await bcrypt.compare(password, existingUser.password)
+
+    if (!correctPassword)
+        return res
+            .status(400)
+            .json({ success: false, message: 'Invalid credentials' });
+
+    const { _id: id, name, photoUrl } = existingUser
+
+    const token = jwt.sign(
+        {
+            id,
+            name,
+            photoUrl
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }
+    )
+
+    res.status(201).json({ success: true, result: { id, name, email: User.email, photoUrl, token } })
 })

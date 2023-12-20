@@ -6,7 +6,7 @@ import { Close, Send } from '@mui/icons-material';
 import { useValue } from '../../context/ContextProvider'
 
 // Actions
-import { register } from '../../actions/user';
+import { login, register } from '../../actions/user';
 
 // Components
 import PasswordField from './PasswordField';
@@ -33,6 +33,10 @@ const Login = () => {
         const email = emailRef.current.value
         const password = passwordRef.current.value
 
+        if (!isRegister) {
+            return login({ email, password }, dispatch)
+        }
+
         // extract only if registering
         const name = nameRef.current?.value
         const confirmPassword = confirmPasswordRef.current?.value
@@ -44,6 +48,7 @@ const Login = () => {
             })
         }
 
+        // register user function
         register({ name, email, password }, dispatch)
     }
 
