@@ -7,6 +7,7 @@ import { useValue } from '../../context/ContextProvider'
 
 // Hooks
 import useCheckToken from '../../hooks/useCheckToken'
+import Profile from './Profile'
 
 const UserMenu = ({ anchorUserMenu, setAnchorUserMenu }) => {
     useCheckToken()
@@ -17,34 +18,34 @@ const UserMenu = ({ anchorUserMenu, setAnchorUserMenu }) => {
         setAnchorUserMenu(null)
     }
 
-    const testAuthorization = async () => {
-        const url = import.meta.env.VITE_SERVER_URL + '/room'
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    authorization: `Bearer ${currentUser.token}`,
-                }
-            })
+    // const testAuthorization = async () => {
+    //     const url = import.meta.env.VITE_SERVER_URL + '/room'
+    //     try {
+    //         const response = await fetch(url, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 authorization: `Bearer ${currentUser.token}`,
+    //             }
+    //         })
 
-            const data = await response.json()
+    //         const data = await response.json()
 
-            console.log(data)
+    //         console.log(data)
 
-            if (!data.success) {
-                if (response.status === 401)
-                    dispatch({ type: 'UPDATE_USER', payload: null });
-                throw new Error(data.message);
-            }
-        } catch (error) {
-            dispatch({
-                type: 'UPDATE_ALERT',
-                payload: { open: true, severity: 'error', message: error.message },
-            });
-            console.log(error);
-        }
-    }
+    //         if (!data.success) {
+    //             if (response.status === 401)
+    //                 dispatch({ type: 'UPDATE_USER', payload: null });
+    //             throw new Error(data.message);
+    //         }
+    //     } catch (error) {
+    //         dispatch({
+    //             type: 'UPDATE_ALERT',
+    //             payload: { open: true, severity: 'error', message: error.message },
+    //         });
+    //         console.log(error);
+    //     }
+    // }
 
     return (
         <>
@@ -54,12 +55,23 @@ const UserMenu = ({ anchorUserMenu, setAnchorUserMenu }) => {
                 onClose={handleCloseUserMenu}
                 onClick={handleCloseUserMenu}
             >
-                <MenuItem onClick={testAuthorization}>
-                    <ListItemIcon>
-                        <Settings fontSize='small' />
-                    </ListItemIcon>
-                    Profile
-                </MenuItem>
+                {!currentUser.google && (
+                    <MenuItem onClick={() => dispatch({
+                        type: 'UPDATE_PROFILE',
+                        payload: {
+                            open: true,
+                            file: null,
+                            photoURL: currentUser?.photoURL,
+                        },
+                    })
+                    }
+                    >
+                        <ListItemIcon>
+                            <Settings fontSize='small' />
+                        </ListItemIcon>
+                        Profile
+                    </MenuItem>
+                )}
                 <MenuItem onClick={() => dispatch({ type: 'UPDATE_USER', payload: null })}>
                     <ListItemIcon>
                         <Logout fontSize='small' />
@@ -67,6 +79,7 @@ const UserMenu = ({ anchorUserMenu, setAnchorUserMenu }) => {
                     Logout
                 </MenuItem>
             </Menu>
+            <Profile />
         </>
     )
 }

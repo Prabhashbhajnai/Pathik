@@ -1,7 +1,7 @@
 import React from 'react'
 import { AppBar, Container, Toolbar, Box, IconButton, Typography, Button } from '@mui/material'
 import { Menu, Lock } from '@mui/icons-material'
-import { useValue } from '../context/contextProvider'
+import { useValue } from '../context/ContextProvider'
 
 // Components
 import UserIcons from './user/UserIcons'

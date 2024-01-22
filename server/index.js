@@ -27,7 +27,7 @@ app.use(express.json({ limit: '10mb' }))
 app.use('/room', roomRouter)
 app.use('/user', userRouter)
 
-app.use('/', (req, res) => res.json({ message: 'Welcome to the server' }))
+app.get('/', (req, res) => res.json({ message: 'Welcome to the server' }))
 app.use((req, res) => res.status(404).json({ success: false, message: 'Not Found' }));
 
 
