@@ -2,7 +2,7 @@ import React from 'react';
 import { Backdrop, CircularProgress } from '@mui/material';
 
 // Context
-import { useValue } from '../context/contextProvider';
+import { useValue } from '../context/ContextProvider';
 
 const Loading = () => {
     const { state: { loading } } = useValue()
