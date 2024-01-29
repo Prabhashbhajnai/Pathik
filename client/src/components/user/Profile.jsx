@@ -84,7 +84,7 @@ const Profile = () => {
               onChange={handleChange}
             />
             <Avatar
-              src={profile.photoURL}
+              src={!profile.photoURL? currentUser.photoUrl : profile.photoURL}
               sx={{ width: 75, height: 75, cursor: 'pointer' }}
             />
           </label>
