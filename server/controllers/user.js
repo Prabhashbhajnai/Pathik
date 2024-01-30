@@ -6,6 +6,7 @@ import tryCatch from './utils/tryCatch.js'
 
 // Models
 import User from '../models/User.js'
+import Room from '../models/Room.js'
 
 // Signup
 export const register = tryCatch(async (req, res) => {
@@ -89,12 +90,12 @@ export const updateProfile = tryCatch(async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(req.user.id, req.body, {
       new: true,
     });
-    const { _id: id, name, photoURL } = updatedUser;
+    const { _id: id, name, photoUrl } = updatedUser;
   
-    // To Do: update all the rooms records added by this user
+    await Room.updateMany({ uid: id }, { uName: name, uPhoto: photoUrl })
   
-    const token = jwt.sign({ id, name, photoURL }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id, name, photoUrl }, process.env.JWT_SECRET, {
       expiresIn: '1h',
     });
-    res.status(200).json({ success: true, result: { name, photoURL, token } });
+    res.status(200).json({ success: true, result: { name, photoUrl, token } });
   });
