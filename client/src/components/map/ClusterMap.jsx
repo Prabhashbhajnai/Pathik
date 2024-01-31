@@ -3,6 +3,7 @@ import ReactMapGL, { Marker } from 'react-map-gl'
 import { Box } from '@mui/material';
 import Supercluster from 'supercluster'
 import { Avatar, Paper, Tooltip } from '@mui/material';
+// import GeocoderInput from '../sidebar/GeocoderInput';
 
 // styles
 import './cluster.css'
@@ -12,6 +13,7 @@ import { useValue } from '../../context/ContextProvider'
 
 // Actions
 import { getRooms } from '../../actions/room'
+import GeocoderInput from '../sidebar/Geocoderinput';
 
 const supercluster = new Supercluster({
   radius: 75,
@@ -19,7 +21,7 @@ const supercluster = new Supercluster({
 })
 
 const ClusterMap = () => {
-  const { state: { rooms }, dispatch, mapRef } = useValue()
+  const { state: { filteredRooms }, dispatch, mapRef } = useValue()
 
   const [points, setPoints] = useState([]);
   const [clusters, setClusters] = useState([]);
@@ -31,7 +33,7 @@ const ClusterMap = () => {
   }, [])
 
   useEffect(() => {
-    const points = rooms.map((room) => ({
+    const points = filteredRooms.map((room) => ({
       type: 'Feature',
       properties: {
         cluster: false,
@@ -51,8 +53,8 @@ const ClusterMap = () => {
       },
     }));
     setPoints(points);
-    console.log(rooms);
-  }, [rooms])
+    // console.log(rooms);
+  }, [filteredRooms])
 
   useEffect(() => {
     supercluster.load(points);
@@ -134,6 +136,7 @@ const ClusterMap = () => {
               </Marker>
             );
           })}
+          <GeocoderInput/>
         </ReactMapGL>
       </Box>
     </>

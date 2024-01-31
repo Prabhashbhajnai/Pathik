@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { AppBar, Container, Toolbar, Box, IconButton, Typography, Button } from '@mui/material'
 import { Menu, Lock } from '@mui/icons-material'
 import { useValue } from '../context/ContextProvider'
 
 // Components
 import UserIcons from './user/UserIcons'
+import Sidebar from './sidebar/Sidebar'
 
 const Navbar = () => {
     const { state: { currentUser }, dispatch } = useValue()
+
+    const [isOpen, setIsOpen] = useState(false);
 
     return (
         <>
@@ -17,7 +20,11 @@ const Navbar = () => {
                     <Container maxWidth='lg'>
                         <Toolbar disableGutters>
                             <Box sx={{ mr: 1 }}>
-                                <IconButton size='large' color='inherit'>
+                                <IconButton
+                                    size="large"
+                                    color="inherit"
+                                    onClick={() => setIsOpen(true)}
+                                >
                                     <Menu />
                                 </IconButton>
                             </Box>
@@ -54,6 +61,7 @@ const Navbar = () => {
                     </Container>
                 </AppBar>
                 <Toolbar/>
+                <Sidebar {...{ isOpen, setIsOpen }} />
                 </>
             </div>
         </>

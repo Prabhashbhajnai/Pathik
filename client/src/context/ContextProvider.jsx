@@ -6,22 +6,26 @@ const initailState = {
     openLogin: false,
     loading: false,
     alert: { open: false, severity: 'info', message: '' },
-    profile:{open:false,file: null,photoURL:''},
+    profile: { open: false, file: null, photoURL: '' },
     images: [],
     details: { title: '', description: '', price: 0 },
     location: { lng: 0, lat: 0 },
-    rooms: []
+    rooms: [],
+    priceFilter: 50,
+    addressFilter: null,
+    filteredRooms: [],
 }
 
-const Context = createContext(initailState)
+const Context = createContext(initailState);
 
 export const useValue = () => {
-    return useContext(Context)
+    return useContext(Context);
 }
 
 const ContextProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(reducer, initailState)
-    const mapRef = useRef()
+    const [state, dispatch] = useReducer(reducer, initailState);
+    const mapRef = useRef();
+    const containerRef = useRef();
 
     useEffect(() => {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -31,7 +35,7 @@ const ContextProvider = ({ children }) => {
     }, []);
 
     return (
-        <Context.Provider value={{ state, dispatch, mapRef }}>
+        <Context.Provider value={{state, dispatch, mapRef, containerRef }}>
             {children}
         </Context.Provider>
     )
