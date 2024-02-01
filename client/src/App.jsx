@@ -6,6 +6,7 @@ import Login from './components/user/Login'
 import Notification from './components/Notification'
 import Loading from './components/Loading'
 import BottomNav from './components/BottomNav'
+import Room from './components/rooms/Room';
 
 const App = () => {
     return (
@@ -15,6 +16,7 @@ const App = () => {
             <Login />
             <Navbar />
             <BottomNav/>
+            <Room/>
         </>
     )
 }
