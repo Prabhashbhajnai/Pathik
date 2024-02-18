@@ -1,24 +1,17 @@
-import React from 'react'
-
-// Components
-import Navbar from './components/Navbar'
-import Login from './components/user/Login'
-import Notification from './components/Notification'
-import Loading from './components/Loading'
-import BottomNav from './components/BottomNav'
-import Room from './components/rooms/Room';
-
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import Dashboard from "./pages/dashboard/Dashboard";
+import Home from "./pages/Home";
 const App = () => {
     return (
         <>
-            <Loading />
-            <Notification />
-            <Login />
-            <Navbar />
-            <BottomNav/>
-            <Room/>
+         <BrowserRouter>
+            <Routes>
+                <Route path='dashboard/*' element={<Dashboard />} />
+                <Route path='*' element={<Home />} />
+            </Routes>
+         </BrowserRouter>
         </>
-    )
-}
+    );
+};
 
-export default App
+export default App;

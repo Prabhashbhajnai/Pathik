@@ -1,101 +1,91 @@
-import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
+import bcrypt from 'bcryptjs';
+import User from '../models/User.js';
+import jwt from 'jsonwebtoken';
+import tryCatch from './utils/tryCatch.js';
+import Room from '../models/Room.js';
 
-// Utils
-import tryCatch from './utils/tryCatch.js'
-
-// Models
-import User from '../models/User.js'
-import Room from '../models/Room.js'
-
-// Signup
 export const register = tryCatch(async (req, res) => {
-    const { name, email, password } = req.body
+  const { name, email, password } = req.body;
+  if (password.length < 6)
+    return res.status(400).json({
+      success: false,
+      message: 'Password must be 6 characters or more',
+    });
+  const emailLowerCase = email.toLowerCase();
+  const existedUser = await User.findOne({ email: emailLowerCase });
+  if (existedUser)
+    return res
+      .status(400)
+      .json({ success: false, message: 'User already exists!' });
+  const hashedPassword = await bcrypt.hash(password, 12);
+  const user = await User.create({
+    name,
+    email: emailLowerCase,
+    password: hashedPassword,
+  });
+  const { _id: id, photoURL, role, active } = user;
+  const token = jwt.sign({ id, name, photoURL }, process.env.JWT_SECRET, {
+    expiresIn: '1h',
+  });
+  res.status(201).json({
+    success: true,
+    result: { id, name, email: user.email, photoURL, token, role, active },
+  });
+});
 
-    // check length of password
-    if (password.length < 6)
-        return res.status(400).json({ success: false, message: 'Password must be at least 6 characters' })
-
-    // change email to lowercase
-    const emailLowerCase = email.toLowerCase()
-
-    // check if user exists
-    const existingUser = await User.findOne({ email: emailLowerCase })
-
-    if (existingUser)
-        return res.status(400).json({ success: false, message: 'User already exists' })
-
-    // hash password
-    const hashedPassword = await bcrypt.hash(password, 12)
-
-    // create user
-    const user = await User.create({
-        name,
-        email: emailLowerCase,
-        password: hashedPassword
-    })
-
-    // after user is created extracting id and photo to send back to client
-    const { _id: id, photoUrl } = user
-
-    // create token
-    const token = jwt.sign(
-        {
-            id,
-            name,
-            photoUrl
-        },
-        process.env.JWT_SECRET,
-        { expiresIn: '1h' }
-    )
-
-    res.status(201).json({ success: true, result: { id, name, email: user.email, photoUrl, token } })
-})
-
-// Login
 export const login = tryCatch(async (req, res) => {
-    const { email, password } = req.body
+  const { email, password } = req.body;
 
-    const emailLowerCase = email.toLowerCase()
-    const existingUser = await User.findOne({ email: emailLowerCase })
+  const emailLowerCase = email.toLowerCase();
+  const existedUser = await User.findOne({ email: emailLowerCase });
+  if (!existedUser)
+    return res
+      .status(404)
+      .json({ success: false, message: 'User does not exist!' });
+  const correctPassword = await bcrypt.compare(password, existedUser.password);
+  if (!correctPassword)
+    return res
+      .status(400)
+      .json({ success: false, message: 'Invalid credentials' });
 
-    if (!existingUser)
-        return res
-            .status(404)
-            .json({ success: false, message: 'User does not exist!' })
-
-    const correctPassword = await bcrypt.compare(password, existingUser.password)
-
-    if (!correctPassword)
-        return res
-            .status(400)
-            .json({ success: false, message: 'Invalid credentials' });
-
-    const { _id: id, name, photoUrl } = existingUser
-
-    const token = jwt.sign(
-        {
-            id,
-            name,
-            photoUrl
-        },
-        process.env.JWT_SECRET,
-        { expiresIn: '1h' }
-    )
-
-    res.status(201).json({ success: true, result: { id, name, email: User.email, photoUrl, token } })
-})
+  const { _id: id, name, photoURL, role, active } = existedUser;
+  if (!active)
+    return res
+      .status(400)
+      .json({
+        success: false,
+        message: 'This account has been suspended! Try to contact the admin',
+      });
+  const token = jwt.sign({ id, name, photoURL }, process.env.JWT_SECRET, {
+    expiresIn: '1h',
+  });
+  res.status(200).json({
+    success: true,
+    result: { id, name, email: emailLowerCase, photoURL, token, role, active },
+  });
+});
 
 export const updateProfile = tryCatch(async (req, res) => {
-    const updatedUser = await User.findByIdAndUpdate(req.user.id, req.body, {
-      new: true,
-    });
-    const { _id: id, name, photoUrl } = updatedUser;
-  
-    await Room.updateMany({ uid: id }, { uName: name, uPhoto: photoUrl })
-  
-    const token = jwt.sign({ id, name, photoUrl }, process.env.JWT_SECRET, {
-      expiresIn: '1h',
-    });
-    res.status(200).json({ success: true, result: { name, photoUrl, token } });
+  const updatedUser = await User.findByIdAndUpdate(req.user.id, req.body, {
+    new: true,
   });
+  const { _id: id, name, photoURL } = updatedUser;
+
+  await Room.updateMany({ uid: id }, { uName: name, uPhoto: photoURL });
+
+  const token = jwt.sign({ id, name, photoURL }, process.env.JWT_SECRET, {
+    expiresIn: '1h',
+  });
+  res.status(200).json({ success: true, result: { name, photoURL, token } });
+});
+
+export const getUsers = tryCatch(async (req, res) => {
+  const users = await User.find().sort({ _id: -1 });
+  res.status(200).json({ success: true, result: users });
+});
+
+export const updateStatus = tryCatch(async (req, res) => {
+  const { role, active } = req.body;
+  await User.findByIdAndUpdate(req.params.userId, { role, active });
+  res.status(200).json({ success: true, result: { _id: req.params.userId } });
+});
