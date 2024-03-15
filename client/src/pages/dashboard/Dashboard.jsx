@@ -12,6 +12,8 @@ import { Brightness4, Brightness7, Home, Menu } from '@mui/icons-material';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SideList from './SideList';
+import Protected from '../../components/protected/protected'
+import  Login  from '../../components/user/Login'
 
 const drawerWidth = 240;
 
@@ -88,8 +90,11 @@ export default function Dashboard() {
             </IconButton>
           </Toolbar>
         </AppBar>
+        <Protected>
         <SideList {...{ open, setOpen }} />
+        </Protected>
       </Box>
+      <Login/>
     </ThemeProvider>
   );
 }

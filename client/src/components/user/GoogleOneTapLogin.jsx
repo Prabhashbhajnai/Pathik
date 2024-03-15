@@ -18,7 +18,7 @@ const GoogleOneTapLogin = () => {
 
         dispatch({
             type: 'UPDATE_USER',
-            payload: { id, email, name, photoURL, token, google: true }
+            payload: { id, email, name, photoURL, token, google: true, roles: 'basic' }
         })
         dispatch({ type: 'CLOSE_LOGIN' });
     }
