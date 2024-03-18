@@ -13,7 +13,7 @@ const Users = ({ setSelectedLink, link }) => {
     dispatch,
   } = useValue();
 
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(10);
   const [rowId, setRowId] = useState(null);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const Users = ({ setSelectedLink, link }) => {
         field: 'photoURL',
         headerName: 'Avatar',
         width: 60,
-        renderCell: (params) => <Avatar src={params.row.photoURL} />,
+        renderCell: (params) => <Avatar src={params.row.photoUrl} />,
         sortable: false,
         filterable: false,
       },

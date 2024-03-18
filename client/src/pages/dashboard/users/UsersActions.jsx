@@ -6,7 +6,10 @@ import { getUsers, updateStatus } from '../../../actions/user';
 import { useValue } from '../../../context/ContextProvider';
 
 const UsersActions = ({ params, rowId, setRowId }) => {
-  const { dispatch, state:{currentUser, user} } = useValue();
+  const {
+    dispatch,
+    state: { currentUser, users },
+  } = useValue();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -14,14 +17,19 @@ const UsersActions = ({ params, rowId, setRowId }) => {
     setLoading(true);
 
     const { role, active, _id } = params.row;
-    const result = await updateStatus({ role, active }, _id, dispatch, currentUser);
+    const result = await updateStatus(
+      { role, active },
+      _id,
+      dispatch,
+      currentUser
+    );
     if (result) {
       setSuccess(true);
       setRowId(null);
-     // const user = user.find(user=>user._id === _id)
-    // user.role = role
-    //  user.active = active
-     getUsers(dispatch, currentUser)
+      const user = users.find(user => user._id === _id)
+      user.role = role
+      user.active = active
+      getUsers(dispatch, currentUser);
     }
     setLoading(false);
   };

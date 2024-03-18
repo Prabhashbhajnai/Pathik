@@ -12,7 +12,7 @@ const userSchema = mongoose.Schema(
       trim: true,
     },
     password: { type: String, required: true },
-    photoURL: { type: String, default: '' },
+    photoUrl: { type: String, default: '' },
     role: {
       type: 'String',
       default: 'basic',

@@ -71,6 +71,7 @@ export const updateProfile = async (currentUser, updatedFields, dispatch) => {
         },
         dispatch
       );
+      console.log(result);
       if (result) {
         dispatch({ type: 'UPDATE_USER', payload: { ...currentUser, ...result } });
         dispatch({

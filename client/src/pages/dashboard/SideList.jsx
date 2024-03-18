@@ -180,7 +180,7 @@ import isAdmin from './utils/isAdmin';
           <Box sx={{ mx: 'auto', mt: 3, mb: 1 }}>
             <Tooltip title={currentUser?.name || ''}>
               <Avatar
-                src={currentUser?.photoURL}
+                src={currentUser?.photoUrl || currentUser?.photoURL}
                 {...(open && { sx: { width: 100, height: 100 } })}
               />
             </Tooltip>
