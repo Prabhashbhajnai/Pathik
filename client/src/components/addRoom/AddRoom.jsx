@@ -13,8 +13,8 @@ import { useValue } from '../../context/ContextProvider';
 import AddDetails from './addDetails/AddDetails';
 import AddImages from './addImages/AddImages';
 import AddLocation from './addLocation/AddLocation';
-import { createRoom } from '../../actions/room';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { clearRoom, createRoom, updateRoom } from '../../actions/room';
+import { useNavigate } from 'react-router-dom';
 
 const AddRoom = () => {
   const {
@@ -155,7 +155,7 @@ const AddRoom = () => {
             >
               {updatedRoom? 'Update':'Submit'}
             </Button>  )}
-            <Button variant='outlined' endIcon={<cancel />} onClick={handlecancel} >Cancel</ Button>
+            <Button variant='outlined' endIcon={<Cancel />} onClick={handlecancel} >Cancel</ Button>
           </Stack>
       
       </Box>

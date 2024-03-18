@@ -31,7 +31,7 @@ const reducer = (state, action) => {
         return { ...state, details: { ...state.details, ...action.payload } };
       case 'UPDATE_LOCATION':
         return { ...state, location: action.payload };
-        case 'UPDATE_UPDATE_ROOM':
+        case 'UPDATE_UPDATED_ROOM':
           return{...state, updatedRoom: action.payload};
           case 'UPDATE_DELETED_IMAGES':
         return { ...state, deletedImages: [...state.deletedImages, ...action.payload] };
@@ -90,7 +90,7 @@ const reducer = (state, action) => {
       case 'UPDATE_USERS':
         return { ...state, users: action.payload };
       case 'DELETE_ROOM':
-        return { ...state, room:state.rooms.filter(room=>room._id !== action.payload) };
+        return { ...state, rooms:state.rooms.filter(room=>room._id !== action.payload) };
         case 'UPDATE_SECTION':
           return { ...state, section: action.payload };  
   
