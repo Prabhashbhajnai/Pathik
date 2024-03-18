@@ -61,7 +61,7 @@ export const deleteRoom = async (room, currentUser, dispatch) => {
 };
 
 export const updateRoom = async (room, currentUser, dispatch, updatedRoom, deletedImages) => {
-  console.log(updateRoom)
+  console.log(updatedRoom)
   console.log(currentUser)
   dispatch({ type: 'START_LOADING' });
 
