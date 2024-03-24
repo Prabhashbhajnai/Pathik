@@ -13,7 +13,7 @@ import { useValue } from '../../context/ContextProvider'
 
 // Actions
 import { getRooms } from '../../actions/room'
-import GeocoderInput from '../sidebar/Geocoderinput';
+import GeocoderInput from '../sidebar/GeocoderInput';
 import PopupRoom from './PopupRoom';
 
 const supercluster = new Supercluster({

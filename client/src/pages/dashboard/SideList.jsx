@@ -30,6 +30,10 @@ import {
   import Requests from './requests/Requests';
   import Rooms from './rooms/Rooms';
   import Users from './users/Users';
+import { storeRoom } from '../../actions/room';
+import { logout } from '../../actions/user';
+import useCheckToken from '../../hooks/useCheckToken';
+import isAdmin from './utils/isAdmin';
   
   const drawerWidth = 240;
   
@@ -81,8 +85,9 @@ import {
   }));
   
   const SideList = ({ open, setOpen }) => {
+    useCheckToken()
     const {
-      state: { currentUser },
+      state: { currentUser, location, details, images, updatedRoom, deletedImages, addedImages },
       dispatch,
     } = useValue();
   
@@ -90,18 +95,21 @@ import {
   
     const list = useMemo(
       () => [
-        {
-          title: 'Main',
-          icon: <Dashboard />,
-          link: '',
-          component: <Main {...{ setSelectedLink, link: '' }} />,
-        },
-        {
-          title: 'Users',
-          icon: <PeopleAlt />,
-          link: 'users',
-          component: <Users {...{ setSelectedLink, link: 'users' }} />,
-        },
+        ...isAdmin(currentUser) ? [
+          {
+            title: 'Main',
+            icon: <Dashboard />,
+            link: '',
+            component: <Main {...{ setSelectedLink, link: '' }} />,
+          },
+          {
+            title: 'Users',
+            icon: <PeopleAlt />,
+            link: 'users',
+            component: <Users {...{ setSelectedLink, link: 'users' }} />,
+          },
+        ] :[],
+        
         {
           title: 'Rooms',
           icon: <KingBed />,
@@ -127,8 +135,8 @@ import {
     const navigate = useNavigate();
   
     const handleLogout = () => {
-      dispatch({ type: 'UPDATE_USER', payload: null });
-      navigate('/');
+      storeRoom(location, details, images, updatedRoom, deletedImages, addedImages, currentUser.id )
+      logout(dispatch);
     };
     return (
       <>
@@ -172,7 +180,7 @@ import {
           <Box sx={{ mx: 'auto', mt: 3, mb: 1 }}>
             <Tooltip title={currentUser?.name || ''}>
               <Avatar
-                src={currentUser?.photoURL}
+                src={currentUser?.photoUrl || currentUser?.photoURL}
                 {...(open && { sx: { width: 100, height: 100 } })}
               />
             </Tooltip>
@@ -196,6 +204,11 @@ import {
             {list.map((item) => (
               <Route key={item.title} path={item.link} element={item.component} />
             ))}
+            <Route path="*" element={ isAdmin(currentUser) ? (
+              <main {...{setSelectedLink, Link:''}} />
+            ) : (
+              <Rooms{...{setSelectedLink, Link:'Room'}} />
+            )}/>
           </Routes>
         </Box>
       </>

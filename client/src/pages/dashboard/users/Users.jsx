@@ -9,16 +9,16 @@ import UsersActions from './UsersActions';
 
 const Users = ({ setSelectedLink, link }) => {
   const {
-    state: { users },
+    state: { users, currentUser },
     dispatch,
   } = useValue();
 
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(10);
   const [rowId, setRowId] = useState(null);
 
   useEffect(() => {
     setSelectedLink(link);
-    if (users.length === 0) getUsers(dispatch);
+    if (users.length === 0) getUsers(dispatch, currentUser);
   }, []);
 
   const columns = useMemo(
@@ -27,7 +27,7 @@ const Users = ({ setSelectedLink, link }) => {
         field: 'photoURL',
         headerName: 'Avatar',
         width: 60,
-        renderCell: (params) => <Avatar src={params.row.photoURL} />,
+        renderCell: (params) => <Avatar src={params.row.photoUrl} />,
         sortable: false,
         filterable: false,
       },
@@ -39,14 +39,14 @@ const Users = ({ setSelectedLink, link }) => {
         width: 100,
         type: 'singleSelect',
         valueOptions: ['basic', 'editor', 'admin'],
-        editable: true,
+        editable: currentUser?.role === 'admin',
       },
       {
         field: 'active',
         headerName: 'Active',
         width: 100,
         type: 'boolean',
-        editable: true,
+        editable: currentUser?.role === 'admin',
       },
       {
         field: 'createdAt',

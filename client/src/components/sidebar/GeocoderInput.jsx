@@ -10,13 +10,11 @@ const ctrl = new MapboxGeocoder({
 const GeocoderInput = () => {
   const { mapRef, containerRef, dispatch } = useValue();
 
-  console.log(containerRef);
-
   useEffect(() => {
     if (containerRef?.current?.children[0]) {
       containerRef.current.removeChild(containerRef.current.children[0]);
     }
-    console.log(containerRef.current);
+
     containerRef.current.appendChild(ctrl.onAdd(mapRef.current.getMap()));
     ctrl.on('result', (e) => {
       const coords = e.result.geometry.coordinates;

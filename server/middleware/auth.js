@@ -14,11 +14,11 @@ const auth = async (req, res, next) => {
             })
 
             const payload = ticket.getPayload()
-            req.user = { id: payload.sub, name: payload.name, photoUrl: payload.picture }
+            req.user = { id: payload.sub, name: payload.name, photoUrl: payload.picture, role:'basic' }
         } else {
             const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-            const { id, name, photoUrl } = decodedToken;
-            req.user = { id, name, photoUrl };
+            const { id, name, photoUrl, role } = decodedToken;
+            req.user = { id, name, photoUrl, role };
         }
 
         next()

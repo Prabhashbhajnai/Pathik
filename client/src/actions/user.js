@@ -71,6 +71,7 @@ export const updateProfile = async (currentUser, updatedFields, dispatch) => {
         },
         dispatch
       );
+      console.log(result);
       if (result) {
         dispatch({ type: 'UPDATE_USER', payload: { ...currentUser, ...result } });
         dispatch({
@@ -100,19 +101,26 @@ export const updateProfile = async (currentUser, updatedFields, dispatch) => {
   
     dispatch({ type: 'END_LOADING' });
   };
-  export const getUsers = async (dispatch) => {
-    const result = await fetchData({ url, method: 'GET' }, dispatch)
+  export const getUsers = async (dispatch, currentUser) => {
+    const result = await fetchData({ url, method: 'GET', token:currentUser.token }, dispatch)
     if (result) {
       dispatch({type:'UPDATE_USERS', payload: result})
     }
   };
-  export const updateStatus = (updatedFields, userId, dispatch) => {
+  export const updateStatus = (updatedFields, userId, dispatch, currentUser) => {
     return fetchData(
       {
         url: `${url}/updateStatus/${userId}`,
         method: 'PATCH',
+        token: currentUser.token,
         body: updatedFields,
       },
       dispatch
     );
+  };
+
+  export const logout =(dispatch) => {
+    dispatch({ type:'UPDATE_USER', payload:null });
+    dispatch({ type:'RESET_ROOM' });
+    dispatch({type:'UPDATE_USERS',payload:[]})
   };
