@@ -3,6 +3,7 @@ import {
     BottomNavigationAction,
     Box,
     Paper,
+    IconButton
   } from '@mui/material';
   import { AddLocationAlt, Bed, LocationOn } from '@mui/icons-material';
   import { useEffect, useRef, useState } from 'react';
@@ -11,6 +12,8 @@ import {
   import AddRoom from './addRoom/AddRoom';
 import Protected from './protected/Protected';
 import { useValue } from '../context/ContextProvider';
+import { FaPlaceOfWorship } from "react-icons/fa"
+import { useNavigate } from 'react-router-dom'
   
   const BottomNav = () => {
    const {state:{section}, dispatch}= useValue()
@@ -18,6 +21,9 @@ import { useValue } from '../context/ContextProvider';
     useEffect(() => {
       ref.current.ownerDocument.body.scrollTop = 0;
     }, [section]);
+
+    const navigate = useNavigate()
+
     return (
       <Box ref={ref}>
         {
@@ -39,6 +45,15 @@ import { useValue } from '../context/ContextProvider';
             <BottomNavigationAction label="Map" icon={<LocationOn />} />
             <BottomNavigationAction label="Rooms" icon={<Bed />} />
             <BottomNavigationAction label="Add" icon={<AddLocationAlt />} />
+            <BottomNavigationAction 
+              label="Points of Interest" 
+              icon={<FaPlaceOfWorship className='h-6 w-6 text-[#666666]' />} 
+              onClick={() => navigate('/placestovisit')}
+            />
+            {/* <div label='Points of Interest' size='large' onClick={() => navigate('/placestovisit')} className='flex flex-col justify-center items-center'>
+                <FaPlaceOfWorship className='h-6 w-6 text-[#666666]' />
+                <p className='text-xs text-[#666666]'>Points of Interest</p>
+            </div> */}
           </BottomNavigation>
         </Paper>
       </Box>

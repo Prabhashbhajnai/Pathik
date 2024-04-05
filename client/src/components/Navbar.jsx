@@ -34,7 +34,7 @@ const Navbar = () => {
                                 noWrap
                                 sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}
                             >
-                                You are Welcome
+                                Pathik
                             </Typography>
                             <Typography
                                 variant='h6'
