@@ -13,7 +13,7 @@ const Key = import.meta.env.VITE_GEOAPIFY_KEY
 
 const SidebarResults = () => {
     const navigate = useNavigate()
-    const { currentLocation, setPlaces, places, markerRef } = useValue()
+    const { currentLocation, setPlaces, places, markerRef, dispatch } = useValue()
 
     const [searchParams] = useSearchParams();
 
@@ -84,6 +84,7 @@ const SidebarResults = () => {
             console.log(error)
             setLoading(false)
             setLoadMore(false)
+            navigate(-1)
             return dispatch({
                 type: 'UPDATE_ALERT',
                 payload: { open: true, severity: 'error', message: 'Sorry Something went wrong. Please try again later' }
