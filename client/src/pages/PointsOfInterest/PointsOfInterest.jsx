@@ -3,11 +3,15 @@ import { MapContainer, TileLayer } from "react-leaflet"
 import { FaChevronRight } from "react-icons/fa"
 import { Outlet, Route, Routes } from "react-router-dom"
 
+// Context
+import { useValue } from "../../context/ContextProvider"
+
 // Components
 import PoiNavbar from "../../components/PointsOfInterest/PoiNavbar"
 import Login from "../../components/user/Login"
 import SidebarSearch from "../../components/PointsOfInterest/SidebarSearch"
 import Notification from "../../components/Notification"
+import MyLocationMarker from "../../components/PointsOfInterest/MyLoactionMarker"
 
 // Styles
 import "leaflet/dist/leaflet.css";
@@ -15,6 +19,8 @@ import './PointsOfInterest.css'
 
 const PointsOfInterest = () => {
     const [sidebarprops, setSidebarProps] = useState({ width: '0%', deg: '0deg' })
+
+    const { setCurrentLocation } = useValue()
 
     // To handle the sidebar toggle
     const handleSideToggle = () => {
@@ -28,6 +34,11 @@ const PointsOfInterest = () => {
     // To give the map container full width and get current location of the user
     useEffect(() => {
         setSidebarProps({ width: '30%', deg: '180deg' })
+
+        // Get the current location of the user
+        navigator.geolocation.getCurrentPosition((position) => {
+            setCurrentLocation([position.coords.latitude, position.coords.longitude])
+        })
     }, [])
 
     return (
@@ -62,7 +73,6 @@ const PointsOfInterest = () => {
                 {/* Map Component */}
                 <div className="w-full z-0 h-full">
                     <MapContainer
-                        whenCreated={(map) => { mapRef.current = map }}
                         center={[0, 0]}
                         zoom={2}
                         style={{ height: "91.3%", width: '100%' }}
@@ -74,12 +84,8 @@ const PointsOfInterest = () => {
                             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
                         />
 
-
-                        {/* <MyLocationMarker
-                            position={currentLocation}
-                            places={places}
-                        />
-                        <PoiMarkers places={places} /> */}
+                        <MyLocationMarker />
+                        {/* <PoiMarkers places={places} /> */}
                     </MapContainer>
                 </div>
             </div>

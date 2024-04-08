@@ -4,6 +4,7 @@ import {
     useEffect,
     useReducer,
     useRef,
+    useState
   } from 'react';
   import reducer from './reducer';
   
@@ -26,6 +27,10 @@ import {
     room: null,
     users: [],
     section: 0,
+    currentLocation: [],
+    places:[],
+    setCurrentLocation: () => { },
+    setPlaces: () => { },
   };
   
   const Context = createContext(initialState);
@@ -36,14 +41,21 @@ import {
   
   const ContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
+
+    const [currentLocation, setCurrentLocation] = useState(null)
+    const [places, setPlaces] = useState([])
+
     const mapRef = useRef();
     const containerRef = useRef();
+    const markerRef = useRef([])
+
     useEffect(() => {
       const currentUser = JSON.parse(localStorage.getItem('currentUser'));
       if (currentUser) {
         dispatch({ type: 'UPDATE_USER', payload: currentUser });
       }
     }, []);
+
     useEffect(()=>{
       if(state.currentUser){
         const room = JSON.parse(localStorage.getItem(state.currentUser.id))
@@ -58,7 +70,7 @@ import {
       }
     }, [state.currentUser]);
     return (
-      <Context.Provider value={{ state, dispatch, mapRef, containerRef }}>
+      <Context.Provider value={{ state, dispatch, mapRef, containerRef, currentLocation, setCurrentLocation, places, setPlaces, markerRef }}>
         {children}
       </Context.Provider>
     );

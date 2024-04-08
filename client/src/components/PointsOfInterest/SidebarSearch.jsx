@@ -47,7 +47,7 @@ const SidebarSearch = () => {
         }
     ]
 
-    const {dispatch} = useValue()
+    const { dispatch, currentLocation } = useValue()
 
     const [searchPlace, setSearchPlace] = useState('')
     const [city, setCity] = useState([])
@@ -94,23 +94,36 @@ const SidebarSearch = () => {
                 payload: { open: true, severity: 'error', message: 'Please select a category' }
             })
         }
+        
         navigate(`/placestovisit/search?category=${typeRef.current.value}&searchType=specific&city=${placeId}`)
     }
 
     // Search for the places round the user's location
     const searchNearby = async () => {
+        // Check if the user has enabled location services
+        if (!currentLocation || currentLocation.length === 0) {
+            return dispatch({
+                type: 'UPDATE_ALERT',
+                payload: { open: true, severity: 'error', message: 'Please enable location services by relading the page' }
+            })
+        }
+
+        // Check if the user has selected a category
         if (!typeRef.current.value) {
             return dispatch({
                 type: 'UPDATE_ALERT',
                 payload: { open: true, severity: 'error', message: 'Please select a category' }
             })
         }
+
+        // Check if the user has selected a radius
         if (!radius || radius === 0) {
             return dispatch({
                 type: 'UPDATE_ALERT',
                 payload: { open: true, severity: 'error', message: 'Please select or enter a radius' }
             })
         }
+
         const selectedRadius = parseInt(radius) * 1000
         navigate(`/placestovisit/search?category=${typeRef.current.value}&searchType=nearme&radius=${selectedRadius}`)
     }
