@@ -42,7 +42,7 @@ const Navbar = () => {
                                 noWrap
                                 sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
                             >
-                                YRW
+                                Pathik
                             </Typography>
 
                             {/* if current user is logged in the show user icons else login button */}
