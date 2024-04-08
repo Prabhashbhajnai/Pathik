@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { AppBar, Container, Toolbar, Box, IconButton, Typography, Button } from '@mui/material'
 import { Menu, Lock } from '@mui/icons-material'
+import { useNavigate } from 'react-router-dom'
+
+// Context
 import { useValue } from '../../context/ContextProvider'
 
 // Components
@@ -8,6 +11,8 @@ import UserIcons from '../user/UserIcons'
 
 const PoiNavbar = () => {
     const { state: { currentUser }, dispatch } = useValue()
+
+    const navigate = useNavigate()
 
     return (
         <>
@@ -20,7 +25,8 @@ const PoiNavbar = () => {
                                     variant='h6'
                                     component='h1'
                                     noWrap
-                                    sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}
+                                    sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, cursor: 'pointer'}}
+                                    onClick={() => navigate('/')}
                                 >
                                     Pathik
                                 </Typography>
@@ -28,7 +34,8 @@ const PoiNavbar = () => {
                                     variant='h6'
                                     component='h1'
                                     noWrap
-                                    sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+                                    sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, cursor: 'pointer'}}
+                                    onClick={() => navigate('/')}
                                 >
                                     Pathik
                                 </Typography>
