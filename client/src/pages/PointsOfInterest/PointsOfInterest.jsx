@@ -12,6 +12,8 @@ import Login from "../../components/user/Login"
 import SidebarSearch from "../../components/PointsOfInterest/SidebarSearch"
 import Notification from "../../components/Notification"
 import MyLocationMarker from "../../components/PointsOfInterest/MyLoactionMarker"
+import PoiMarkers from "../../components/PointsOfInterest/PoiMarkers"
+import SidebarResults from "../../components/PointsOfInterest/SidebarResults"
 
 // Styles
 import "leaflet/dist/leaflet.css";
@@ -56,7 +58,7 @@ const PointsOfInterest = () => {
                     {/* Side bar for different Url */}
                     <Routes>
                         <Route index element={<SidebarSearch />} />
-                        {/* <Route path="search" element={<SidebarResults />} /> */}
+                        <Route path="/search" element={<SidebarResults />} />
                     </Routes>
 
                     <div
@@ -85,7 +87,7 @@ const PointsOfInterest = () => {
                         />
 
                         <MyLocationMarker />
-                        {/* <PoiMarkers places={places} /> */}
+                        <PoiMarkers />
                     </MapContainer>
                 </div>
             </div>
