@@ -68,12 +68,12 @@ const SidebarResults = () => {
             // if loading for the first time
             if (!searchResults || searchResults.length === 0) {
                 setPlaces(res.features.map(place => ({ name: place.properties?.name, alt: place.properties.address_line1, coordinates: [place.properties.lat, place.properties.lon], })))
-                setSearchResults(res.features.map(place => ({ ...place.properties })))
+                setSearchResults(res.features.map(place => ({ ...place.properties, distance: place.properties.distance / 1000 })))
             }
             // if loading more
             else {
                 setPlaces([...places, ...res.features.map(place => ({ name: place.properties?.name, alt: place.properties.address_line1, coordinates: [place.properties.lat, place.properties.lon], }))])
-                setSearchResults([...searchResults, ...res.features.map(place => ({ ...place.properties }))])
+                setSearchResults([...searchResults, ...res.features.map(place => ({ ...place.properties, distance: place.properties.distance / 1000 }))])
             }
 
             if (res) {

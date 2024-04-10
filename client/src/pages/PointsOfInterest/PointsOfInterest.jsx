@@ -19,6 +19,9 @@ import SidebarResults from "../../components/PointsOfInterest/SidebarResults"
 import "leaflet/dist/leaflet.css";
 import './PointsOfInterest.css'
 
+// Key
+const Key = import.meta.env.VITE_GEOAPIFY_KEY
+
 const PointsOfInterest = () => {
     const [sidebarprops, setSidebarProps] = useState({ width: '0%', deg: '0deg' })
 
@@ -42,6 +45,9 @@ const PointsOfInterest = () => {
             setCurrentLocation([position.coords.latitude, position.coords.longitude])
         })
     }, [])
+
+    // const geoapifyUrl = `https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}.png?apiKey=${Key}`;
+    // const mapboxUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=${import.meta.env.VITE_REACT_APP_MAP_TOKEN}`;
 
     return (
         <div className='h-screen overflow-hidden'>
