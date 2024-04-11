@@ -1,0 +1,8 @@
+.trapezium {
+    border-bottom: 19px solid transparent;
+    border-Top: 19px solid transparent;
+    border-left: 19px solid #ffffff;
+    height: 70px;
+    right: calc(0% - 18px);
+    cursor: pointer;
+}
