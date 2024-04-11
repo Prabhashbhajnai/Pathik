@@ -16,6 +16,7 @@ const roomSchema = mongoose.Schema(
       type: [String],
       validate: (v) => Array.isArray(v) && v.length > 0,
     },
+    roomsAvailable: { type: Number, required: true, min: 1, max: 1000 },
     uid: { type: String, required: true },
     uName: { type: String, required: true },
     uPhoto: { type: String, default: '' },

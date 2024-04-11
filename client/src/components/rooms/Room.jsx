@@ -34,7 +34,7 @@ const Room = () => {
         state: { room },
         dispatch,
     } = useValue();
-
+console.log(room);
     const [place, setPlace] = useState(null);
 
     useEffect(() => {
@@ -157,11 +157,25 @@ const Room = () => {
                             <Typography component="span">{place?.place_name}</Typography>
                         </Box>
                     </Stack>
-                    <Stack>
-                        <Typography variant="h6" component="span">
-                            {'Details: '}
-                        </Typography>
-                        <Typography component="span">{room?.description}</Typography>
+                    <Stack
+                        direction="row"
+                        sx={{
+                            justifyContent: 'space-between',
+                            flexWrap: 'wrap',
+                        }}
+                    >
+                        <Box>
+                            <Typography variant="h6" component="span">
+                                {'Details: '}
+                            </Typography>
+                            <Typography component="span">{room?.description}</Typography>
+                        </Box>
+                        <Box>
+                            <Typography variant="h6" component="span">
+                                {'Rooms Available: '}
+                            </Typography>
+                            <Typography component="span">{room?.roomsAvailable}</Typography>
+                        </Box>
                     </Stack>
                 </Stack>
             </Container>

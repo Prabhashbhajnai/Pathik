@@ -88,6 +88,7 @@ const AddRoom = () => {
       price: details.price,
       title: details.title,
       description: details.description,
+      roomsAvailable: details.roomsAvailable,
       images,
     };
     if(updatedRoom) return updateRoom(room, currentUser, dispatch, updatedRoom, deletedImages)
