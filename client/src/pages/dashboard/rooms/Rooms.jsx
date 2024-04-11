@@ -35,6 +35,7 @@ const Rooms = ({ setSelectedLink, link }) => {
       { field: 'price', headerName: 'Cost', width: 70, renderCell: (params) => '$' + params.row.price },
       { field: 'title', headerName: 'Title', width: 170 },
       { field: 'description', headerName: 'Description', width: 200 },
+      { field: 'roomsAvailable', headerName: 'Available Rooms', width: 70},
       { field: 'lng', headerName: 'Longitude', width: 110 },
       { field: 'lat', headerName: 'Latitude', width: 110 },
 

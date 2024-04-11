@@ -18,6 +18,7 @@ const AddDetails = () => {
     },
     dispatch,
   } = useValue();
+  
   const [costType, setCostType] = useState(price ? 1 : 0);
   const handleCostTypeChange = (e) => {
     const costType = Number(e.target.value);

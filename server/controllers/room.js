@@ -20,5 +20,5 @@ export const deleteRooms = tryCatch(async (req, res)=>{
 });
 export const updateRooms = tryCatch(async (req, res)=>{
   const updateRoom = await Room.findByIdAndUpdate(req.params.roomId, req.body, {new:true})
-  res.status(200).json({sucess:true, result:updateRoom})
+  res.status(200).json({success:true, result:updateRoom})
 })

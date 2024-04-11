@@ -34,7 +34,7 @@ const Room = () => {
         state: { room },
         dispatch,
     } = useValue();
-console.log(room);
+    console.log(room);
     const [place, setPlace] = useState(null);
 
     useEffect(() => {
