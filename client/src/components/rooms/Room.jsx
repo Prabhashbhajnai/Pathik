@@ -203,6 +203,8 @@ const Room = () => {
                                             selectRange={true}
                                             onChange={(value) => setDaysBooked(value)}
                                             tileDisabled={({ date }) => blackoutDates.includes(date.getDate())}
+                                            minDate={new Date()}
+                                            onClickDay={(value) => setDaysBooked([value, value])}
                                         />
 
                                         <div className='flex'>

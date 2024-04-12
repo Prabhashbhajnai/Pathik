@@ -4,7 +4,7 @@ const url = import.meta.env.VITE_SERVER_URL + '/booking'
 
 export const createBooking = async (booking, currentUser, dispatch) => {
     dispatch({ type: 'START_LOADING' })
-    console.log(booking);
+    
     const result = await fetchData(
         { url, body: booking, token: currentUser?.token },
         dispatch
