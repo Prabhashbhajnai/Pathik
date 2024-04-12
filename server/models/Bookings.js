@@ -3,6 +3,9 @@ import mongoose from "mongoose"
 const bookingSchema = mongoose.Schema(
     {
         roomId: { type: String, required: true },
+        title: { type: String, required: true },
+        roomImg: { type: String, required: true },
+        location: { type: String, required: true },
         uid: { type: String, required: true },
         uName: { type: String, required: true },
         uPhoto: { type: String, required: true},

@@ -15,3 +15,10 @@ export const getBookings = tryCatch(async (req, res) => {
 
     return res.status(200).json({ success: true, result: bookings });
 })
+
+// get all booking for a user
+export const getUserBookings = tryCatch(async (req, res) => {
+    const bookings = await Booking.find({ uid: req.params.id });
+
+    return res.status(200).json({ success: true, result: bookings });
+})

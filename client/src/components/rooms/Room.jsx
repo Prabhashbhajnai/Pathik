@@ -66,6 +66,7 @@ const Room = () => {
             // convert object to array and filter dates that are fully booked
             dateCounts = Object.entries(dateCounts).filter(([date, count]) => count >= room.roomsAvailable);
 
+            // set blackout dates
             setBlackoutDates(dateCounts.map(([date, count]) => new Date(date).getDate()))
         } catch (error) {
             console.log(error);
