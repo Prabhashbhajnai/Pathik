@@ -4,12 +4,11 @@ import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import { useValue } from '../../../context/ContextProvider';
 import moment from 'moment';
 import { grey } from '@mui/material/colors';
-import isAdmin from '../utils/isAdmin';
 import { getUserBookings } from '../../../actions/booking';
+import BookingActions from './BookingActions';
 
 const MyBookings = ({ setSelectedLink, link }) => {
-    const { state: { currentUser }, dispatch } = useValue();
-    console.log(currentUser);
+    const { state: { currentUser } } = useValue();
 
     const [pageSize, setPageSize] = useState(5);
     const [userBookings, setUserBookings] = useState([]);
@@ -24,10 +23,6 @@ const MyBookings = ({ setSelectedLink, link }) => {
         fetchData()
     }, []);
 
-    useEffect(() => {
-        console.log(userBookings);
-    }, [userBookings])
-
     const columns = useMemo(
         () => [
             { field: '_id', headerName: 'Booking ID', width: 220 },
@@ -41,7 +36,7 @@ const MyBookings = ({ setSelectedLink, link }) => {
             },
             { field: 'title', headerName: 'Homestay Name', width: 220 },
             { field: 'location', headerName: 'Location', width: 220 },
-            { field: 'daysOfStay', headerName: 'Ddays', width: 70, renderCell: (params) => params.row.daysOfStay.length + ' days' },
+            { field: 'daysOfStay', headerName: 'Days', width: 70, renderCell: (params) => params.row.daysOfStay.length + ' days' },
             { field: 'price', headerName: 'Price', width: 70, renderCell: (params) => '₹' + params.row.amount },
             {
                 field: 'createdAt',
@@ -50,15 +45,16 @@ const MyBookings = ({ setSelectedLink, link }) => {
                 renderCell: (params) =>
                     moment(params.row.createdAt).format('YYYY-MM-DD HH:MM:SS'),
             },
-            // {
-            //     field: 'actions',
-            //     headerName: 'Actions',
-            //     type: 'actions',
-            //     width: 150,
-            //     // renderCell: (params) => (
-            //     //     // <RoomsActions {...{ params }} />
-            //     // ),
-            // },
+            {
+                field: 'actions',
+                headerName: 'Actions',
+                type: 'actions',
+                width: 150,
+                renderCell: (params) => (
+                    // <BookingActions {...{ params }} />
+                    <BookingActions params={params} setUserBookings={(updatedBookings) => setUserBookings(updatedBookings)} />
+                ),
+            },
         ],
         []
     );

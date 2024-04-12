@@ -16,10 +16,11 @@ const Booking = () => {
     const [isBooking, setIsBooking] = useState(true)
 
     const { dates, room, place } = location.state
+    console.log(room);
 
     const completeBooking = async () => {
         const booking = {
-            roomId: room._id,
+            roomId: room.roomId || room._id,
             title: room.title,
             location: place.place_name,
             roomImg: room.images[0],

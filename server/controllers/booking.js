@@ -22,3 +22,16 @@ export const getUserBookings = tryCatch(async (req, res) => {
 
     return res.status(200).json({ success: true, result: bookings });
 })
+
+// delete a booking
+export const deleteBooking = tryCatch(async (req, res) => {
+    const { id } = req.params
+
+    const deleteBooking = await Booking.findOneAndDelete({ _id: id })
+
+    if (!deleteBooking) {
+        return res.status(404).json({ success: false, message: 'No booking found with this ID' })
+    }
+
+    return res.status(200).json({ success: true, result: deleteBooking })
+})
