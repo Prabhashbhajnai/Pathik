@@ -56,6 +56,7 @@ const Room = () => {
     }, [room]);
 
     const handleClose = () => {
+        setBooking(false)
         dispatch({ type: 'UPDATE_ROOM', payload: null });
     };
 
