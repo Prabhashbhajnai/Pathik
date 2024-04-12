@@ -2,6 +2,7 @@ import {
     AppBar,
     Avatar,
     Box,
+    Button,
     Container,
     Dialog,
     IconButton,
@@ -25,18 +26,26 @@ import 'swiper/css/lazy';
 import 'swiper/css/zoom';
 import './swiper.css';
 
+import Calendar from 'react-calendar'
+import 'react-calendar/dist/Calendar.css'
+
+import { useNavigate } from 'react-router-dom';
+
 const Transition = forwardRef((props, ref) => {
     return <Slide direction="up" {...props} ref={ref} />;
 });
 
 const Room = () => {
-    const {
-        state: { room },
-        dispatch,
-    } = useValue();
-    console.log(room);
+    const { state: { room }, dispatch } = useValue();
+
     const [place, setPlace] = useState(null);
 
+    const [booking, setBooking] = useState(false)
+
+    const [daysBooked, setDaysBooked] = useState([]) // [date1, date2, date3, ...
+    const navigate = useNavigate()
+
+    // Fetch place details
     useEffect(() => {
         if (room) {
             const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${room.lng},${room.lat}.json?access_token=${import.meta.env.VITE_REACT_APP_MAP_TOKEN}`;
@@ -49,6 +58,32 @@ const Room = () => {
     const handleClose = () => {
         dispatch({ type: 'UPDATE_ROOM', payload: null });
     };
+
+    // Custom method to add days to date object
+    Date.prototype.addDays = function (days) {
+        var dat = new Date(this.valueOf()) // create new date object with current date
+        dat.setDate(dat.getDate() + days); // add days to date object
+        return dat; // return new date object
+    }
+
+    // Get dates between two dates
+    const getDates = (startDate, stopDate) => {
+        var dateArray = new Array();
+        var currentDate = startDate;
+        while (currentDate <= stopDate) {
+            dateArray.push(currentDate)
+            currentDate = currentDate.addDays(1);
+        }
+
+        return dateArray;
+    }
+
+    const handleBook = () => {
+        const dates = getDates(daysBooked[0], daysBooked[1])
+        handleClose()
+        navigate('/booking', { state: { dates, room, place } })
+    }
+
     return (
         <Dialog
             fullScreen
@@ -124,17 +159,46 @@ const Room = () => {
                             sx={{
                                 display: 'flex',
                                 alignItems: 'center',
+                                gap: '2rem',
                             }}
                         >
-                            <Typography variant="h6" component="span">
-                                {'Ratings: '}
-                            </Typography>
-                            <Rating
-                                name="room-ratings"
-                                defaultValue={3.5}
-                                precision={0.5}
-                                emptyIcon={<StarBorder />}
-                            />
+
+                            {/* Booking button */}
+                            <div style={{ position: 'relative' }}>
+                                <Button variant='contained' onClick={() => setBooking(prev => (!prev))}>Book Now</Button>
+                                {booking && (
+                                    <div style={{ position: 'absolute', top: '50px', left: '0' }}>
+                                        <Calendar
+                                            selectRange={true}
+                                            onChange={(value) => setDaysBooked(value)}
+                                        // tileDisabled={({date}) => blackoutDates.includes(date.getDate()) }
+                                        />
+
+                                        <div className='flex'>
+                                            <Button className='flex justify-end w-full' onClick={() => setBooking(false)}>Cancel</Button>
+                                            <Button className='flex justify-end w-full' onClick={handleBook}>Ok</Button>
+                                        </div>
+
+                                    </div>
+                                )}
+                            </div>
+
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Typography variant="h6" component="span">
+                                    {'Ratings: '}
+                                </Typography>
+                                <Rating
+                                    name="room-ratings"
+                                    defaultValue={3.5}
+                                    precision={0.5}
+                                    emptyIcon={<StarBorder />}
+                                />
+                            </Box>
                         </Box>
                     </Stack>
                     <Stack
