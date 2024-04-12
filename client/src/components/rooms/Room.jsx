@@ -31,6 +31,8 @@ import 'react-calendar/dist/Calendar.css'
 
 import { useNavigate } from 'react-router-dom';
 
+const url = import.meta.env.VITE_SERVER_URL + '/booking'
+
 const Transition = forwardRef((props, ref) => {
     return <Slide direction="up" {...props} ref={ref} />;
 });
@@ -43,7 +45,32 @@ const Room = () => {
     const [booking, setBooking] = useState(false)
 
     const [daysBooked, setDaysBooked] = useState([]) // [date1, date2, date3, ...
+    const [blackoutDates, setBlackoutDates] = useState([])
+
     const navigate = useNavigate()
+
+    const getBlackoutDates = async () => {
+        try {
+            const data = await fetch(`${url}/${room._id}`)
+            const res = await data.json()
+            var dateCounts = {}
+
+            if (res) {
+                res.result.forEach(booking => {
+                    booking.daysOfStay.forEach(day => {
+                        dateCounts[day] = (dateCounts[day] || 0) + 1
+                    })
+                })
+            }
+            
+            // convert object to array and filter dates that are fully booked
+            dateCounts = Object.entries(dateCounts).filter(([date, count]) => count >= room.roomsAvailable);
+
+            setBlackoutDates(dateCounts.map(([date, count]) => new Date(date).getDate()))
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     // Fetch place details
     useEffect(() => {
@@ -52,6 +79,8 @@ const Room = () => {
             fetch(url)
                 .then((response) => response.json())
                 .then((data) => setPlace(data.features[0]));
+
+            getBlackoutDates()
         }
     }, [room]);
 
@@ -172,7 +201,7 @@ const Room = () => {
                                         <Calendar
                                             selectRange={true}
                                             onChange={(value) => setDaysBooked(value)}
-                                        // tileDisabled={({date}) => blackoutDates.includes(date.getDate()) }
+                                            tileDisabled={({ date }) => blackoutDates.includes(date.getDate())}
                                         />
 
                                         <div className='flex'>

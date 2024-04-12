@@ -15,11 +15,11 @@ export const createBooking = async (booking, currentUser, dispatch) => {
             payload: {
                 open: true,
                 severity: 'success',
-                message: 'The booking has been added successfully'
+                message: 'The booking has been added successfully! To view your bookings, go to the Dashboard.'
             }
         })
     }
     dispatch({ type: 'END_LOADING' });
-    
+
     return result
 }

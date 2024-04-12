@@ -8,3 +8,10 @@ export const createBooking = tryCatch(async (req, res) => {
 
     return res.status(201).json({ success: true, result: newBooking });
 });
+
+// get all booking for a homestay
+export const getBookings = tryCatch(async (req, res) => {
+    const bookings = await Booking.find({ roomId: req.params.id });
+
+    return res.status(200).json({ success: true, result: bookings });
+})

@@ -29,7 +29,6 @@ const Booking = () => {
         const result = await createBooking(booking, currentUser, dispatch)
         if (result)
             setIsBooking(false)
-        console.log(result);
     }
 
     return (
@@ -86,7 +85,7 @@ const Booking = () => {
                     {isBooking ?
                         (
                             <div className="flex justify-between mt-5 w-1/2">
-                                <button className="border-2 px-4 py-1 rounded-md">Cancel</button>
+                                <button className="border-2 px-4 py-1 rounded-md" onClick={() => window.location.replace('/')}>Cancel</button>
                                 <button className="border-2 px-4 py-1 rounded-md bg-blue-500 text-white" onClick={completeBooking}>Proceed</button>
                             </div>
                         ) : (
