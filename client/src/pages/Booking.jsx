@@ -20,6 +20,9 @@ const Booking = () => {
     const completeBooking = async () => {
         const booking = {
             roomId: room._id,
+            title: room.title,
+            location: place.place_name,
+            roomImg: room.images[0],
             checkIn: dates[0],
             checkOut: dates[dates.length - 1],
             amount: room.price * dates.length,

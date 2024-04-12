@@ -30,7 +30,7 @@ const MyBookings = ({ setSelectedLink, link }) => {
 
     const columns = useMemo(
         () => [
-            { field: '_id', headerName: 'Booking ID', width: 250 },
+            { field: '_id', headerName: 'Booking ID', width: 220 },
             {
                 field: 'roomImg',
                 headerName: 'Photo',
@@ -39,14 +39,14 @@ const MyBookings = ({ setSelectedLink, link }) => {
                 sortable: false,
                 filterable: false,
             },
-            { field: 'title', headerName: 'Homestay Name', width: 250 },
-            { field: 'location', headerName: 'Location', width: 110 },
+            { field: 'title', headerName: 'Homestay Name', width: 220 },
+            { field: 'location', headerName: 'Location', width: 220 },
             { field: 'daysOfStay', headerName: 'Ddays', width: 70, renderCell: (params) => params.row.daysOfStay.length + ' days' },
             { field: 'price', headerName: 'Price', width: 70, renderCell: (params) => '₹' + params.row.amount },
             {
                 field: 'createdAt',
                 headerName: 'Booked On',
-                width: 200,
+                width: 170,
                 renderCell: (params) =>
                     moment(params.row.createdAt).format('YYYY-MM-DD HH:MM:SS'),
             },
