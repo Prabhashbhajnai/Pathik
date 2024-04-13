@@ -85,7 +85,7 @@ const Booking = () => {
             roomImg: room.roomImg,
             checkIn: daysBooked[0],
             checkOut: daysBooked[daysBooked.length - 1],
-            amount: room.amount,
+            amount: room.price * daysBooked.length,
             daysOfStay: daysBooked,
             roomsAvailable: room.roomsAvailable
         }
