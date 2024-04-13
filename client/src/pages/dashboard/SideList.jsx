@@ -7,6 +7,7 @@ import {
     NotificationsActive,
     PeopleAlt,
   } from '@mui/icons-material';
+  import EventIcon from '@mui/icons-material/Event';
   import {
     Avatar,
     Box,
@@ -34,6 +35,7 @@ import { storeRoom } from '../../actions/room';
 import { logout } from '../../actions/user';
 import useCheckToken from '../../hooks/useCheckToken';
 import isAdmin from './utils/isAdmin';
+import MyBookings from './myBookings/MyBookings';
   
   const drawerWidth = 240;
   
@@ -115,6 +117,12 @@ import isAdmin from './utils/isAdmin';
           icon: <KingBed />,
           link: 'rooms',
           component: <Rooms {...{ setSelectedLink, link: 'rooms' }} />,
+        },
+        {
+          title: 'My Bookings',
+          icon: <EventIcon />,
+          link: 'mybookings',
+          component: <MyBookings {...{ setSelectedLink, link: 'mybookings' }} />,
         },
         {
           title: 'Requests',

@@ -9,19 +9,19 @@ import Room from './components/rooms/Room';
 import Dashboard from "./pages/dashboard/Dashboard";
 import Home from "./pages/Home";
 import PointsOfInterest from "./pages/PointsOfInterest/PointsOfInterest";
+import Booking from "./pages/Booking";
 
 const App = () => {
     return (
         <>
             <Loading />
             <Notification />
-            <BrowserRouter>
-                <Routes>
-                    <Route path='dashboard/*' element={<Dashboard />} />
-                    <Route path='*' element={<Home />} />
-                    <Route path="placestovisit/*" element={<PointsOfInterest />} />
-                </Routes>
-            </BrowserRouter>
+            <Routes>
+                <Route path='dashboard/*' element={<Dashboard />} />
+                <Route path='*' element={<Home />} />
+                <Route path='booking' element={<Booking />} />
+                <Route path="placestovisit/*" element={<PointsOfInterest />} />
+            </Routes>
             <Room />
         </>
     );

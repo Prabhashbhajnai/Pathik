@@ -48,6 +48,7 @@ const ClusterMap = () => {
         images: room.images,
         uPhoto: room.uPhoto,
         uName: room.uName,
+        roomsAvailable: room.roomsAvailable,
       },
       geometry: {
         type: 'Point',

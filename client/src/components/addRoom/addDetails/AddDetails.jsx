@@ -14,10 +14,11 @@ import InfoField from './InfoField';
 const AddDetails = () => {
   const {
     state: {
-      details: { title, description, price },
+      details: { title, description, price, roomsAvailable },
     },
     dispatch,
   } = useValue();
+  
   const [costType, setCostType] = useState(price ? 1 : 0);
   const handleCostTypeChange = (e) => {
     const costType = Number(e.target.value);
@@ -76,6 +77,10 @@ const AddDetails = () => {
         }}
         minLength={10}
         optionalProps={{ multiline: true, rows: 4 }}
+      />
+      <InfoField
+        mainProps={{ name: 'roomsAvailable', label: 'Rooms Available', value: roomsAvailable }}
+        minLength={1}
       />
     </Stack>
   );
