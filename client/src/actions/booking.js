@@ -4,7 +4,7 @@ const url = import.meta.env.VITE_SERVER_URL + '/booking'
 
 export const createBooking = async (booking, currentUser, dispatch) => {
     dispatch({ type: 'START_LOADING' })
-    
+
     const result = await fetchData(
         { url, body: booking, token: currentUser?.token },
         dispatch
@@ -44,8 +44,30 @@ export const deleteBooking = async (bookingId, token, dispatch) => {
             }
         })
     }
-    
+
     dispatch({ type: 'END_LOADING' });
 
+    return result
+}
+
+export const updateBooking = async (booking, token, dispatch) => {
+    dispatch({ type: 'START_LOADING' })
+
+    const result = await fetchData({ url: `${url}/${booking._id}`, method: 'PATCH', body: booking, token: token })
+
+    if (result) {
+        dispatch({
+            type: 'UPDATE_ALERT',
+            payload: {
+                open: true,
+                severity: 'success',
+                message: 'The booking has been updated successfully'
+            }
+        })
+    }
+
+    dispatch({ type: 'END_LOADING' });
+
+    console.log(result);
     return result
 }

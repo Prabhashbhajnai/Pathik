@@ -23,6 +23,12 @@ const MyBookings = ({ setSelectedLink, link }) => {
         fetchData()
     }, []);
 
+    Date.prototype.addDays = function (days) {
+        var dat = new Date(this.valueOf()) // create new date object with current date
+        dat.setDate(dat.getDate() + days); // add days to date object
+        return dat; // return new date object
+    }
+
     const columns = useMemo(
         () => [
             { field: '_id', headerName: 'Booking ID', width: 220 },
@@ -37,6 +43,8 @@ const MyBookings = ({ setSelectedLink, link }) => {
             { field: 'title', headerName: 'Homestay Name', width: 220 },
             { field: 'location', headerName: 'Location', width: 220 },
             { field: 'daysOfStay', headerName: 'Days', width: 70, renderCell: (params) => params.row.daysOfStay.length + ' days' },
+            { field: 'checkIn', headerName: 'Check-In', width: 170, renderCell: (params) => new Date(params.row.checkIn).toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' }) },
+            { field: 'checkOut', headerName: 'Check-Out', width: 170, renderCell: (params) => new Date(params.row.checkOut).addDays(1).toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' }) },
             { field: 'price', headerName: 'Price', width: 70, renderCell: (params) => '₹' + params.row.amount },
             {
                 field: 'createdAt',

@@ -110,9 +110,9 @@ const Room = () => {
     }
 
     const handleBook = () => {
-        const dates = getDates(daysBooked[0], daysBooked[1])
+        let daysOfStay = getDates(daysBooked[0], daysBooked[1])
         handleClose()
-        navigate('/booking', { state: { dates, room, place } })
+        navigate('/booking?newbooking=true', { state: { daysOfStay, blackoutDates, room, place } })
     }
 
     return (
