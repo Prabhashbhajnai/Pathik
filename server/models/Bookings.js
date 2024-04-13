@@ -7,6 +7,7 @@ const bookingSchema = mongoose.Schema(
         roomImg: { type: String, required: true },
         location: { type: String, required: true },
         roomsAvailable: { type: Number, required: true },
+        price: { type: Number, required: true },
         uid: { type: String, required: true },
         uName: { type: String, required: true },
         uPhoto: { type: String, required: true},

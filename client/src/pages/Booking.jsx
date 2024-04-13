@@ -25,7 +25,6 @@ const Booking = () => {
     const [isBooking, setIsBooking] = useState(true)
 
     let { daysOfStay, room, place } = location.state
-    console.log(room);
 
     const [searchParams] = useSearchParams()
     const newBooking = searchParams.get('newbooking')
@@ -64,6 +63,7 @@ const Booking = () => {
             title: room.title,
             location: place.place_name,
             roomImg: room.images[0],
+            price: room.price,
             checkIn: daysBooked[0],
             checkOut: daysBooked[daysBooked.length - 1],
             amount: room.price * daysBooked.length,
@@ -202,7 +202,7 @@ const Booking = () => {
                     {/* Price */}
                     <div className="flex items-center w-full md:w-1/2">
                         <h1 className="text-xl w-1/2 font-bold">Total Price:</h1>
-                        <h1 className="text-xl w-1/2">₹ {room?.price * daysBooked?.length || room.amount}/-</h1>
+                        <h1 className="text-xl w-1/2">₹ {room?.price * daysBooked?.length}/-</h1>
                     </div>
                     {isBooking ?
                         (newBooking === 'true' ? (

@@ -29,6 +29,7 @@ const BookingActions = ({ params, setUserBookings }) => {
             title: params.row.title,
             location: params.row.location,
             roomImg: params.row.roomImg,
+            price: params.row.price,
             checkIn: params.row.checkIn,
             checkOut: params.row.checkOut,
             amount: params.row.amount,
