@@ -202,7 +202,7 @@ const Booking = () => {
                     {/* Price */}
                     <div className="flex items-center w-full md:w-1/2">
                         <h1 className="text-xl w-1/2 font-bold">Total Price:</h1>
-                        <h1 className="text-xl w-1/2">₹ {room?.price * daysBooked?.length}/-</h1>
+                        <h1 className="text-xl w-1/2">$ {room?.price * daysBooked?.length}/-</h1>
                     </div>
                     {isBooking ?
                         (newBooking === 'true' ? (
