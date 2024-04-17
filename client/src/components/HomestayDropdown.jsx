@@ -22,7 +22,7 @@ const HomestayDropdown = ({ homestays, selectedHomestay, setSelectedHomestay }) 
                 </div>
 
                 {/* options dropdown */}
-                <div className={`absolute bg-[#272727] w-full px-2 py-2 h-auto max-h-56 flex flex-col gap-3 overflow-y-scroll select-none rounded-b-lg ${!open && 'hidden'}`}>
+                <div className={`absolute bg-[#272727] w-full px-2 py-2 h-auto max-h-56 flex flex-col gap-3 overflow-y-scroll select-none rounded-b-lg z-10 ${!open && 'hidden'}`}>
                     {homestays.map((homestay) => (
                         <div 
                             key={homestay._id} 

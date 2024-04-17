@@ -70,3 +70,9 @@ export const updateBooking = async (booking, token, dispatch) => {
 
     return result
 }
+
+export const getHomestayBookings = async (homestayId, token) => {
+    const result = await fetchData({ url: `${url}/homestay/${homestayId}`, method: 'GET', token: token})
+
+    return result
+}
