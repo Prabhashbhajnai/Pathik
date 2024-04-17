@@ -16,6 +16,7 @@ const HostedReservations = ({ setSelectedLink, link }) => {
 
     const [pageSize, setPageSize] = useState(5);
     const [homestays, setHomestays] = useState([]);
+    const [selectedHomestay, setSelectedHomestay] = useState(null);
 
     useEffect(() => {
         setSelectedLink(link)
@@ -23,6 +24,10 @@ const HostedReservations = ({ setSelectedLink, link }) => {
         const fetchData = async () => {
             const bookings = await getUserRooms(currentUser)
             setHomestays(bookings)
+
+            if(bookings.length > 0) {
+                setSelectedHomestay(bookings[0])
+            }
         }
 
         fetchData()
@@ -51,7 +56,11 @@ const HostedReservations = ({ setSelectedLink, link }) => {
                     Hosted Reservations
                 </Typography>
 
-                <HomestayDropdown homestays={homestays} />
+                <HomestayDropdown 
+                    homestays={homestays} 
+                    selectedHomestay={selectedHomestay} 
+                    setSelectedHomestay={(homestay) => setSelectedHomestay(homestay)} 
+                />
 
             </Box>
         </>
