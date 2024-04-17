@@ -68,6 +68,5 @@ export const updateBooking = async (booking, token, dispatch) => {
 
     dispatch({ type: 'END_LOADING' });
 
-    console.log(result);
     return result
 }

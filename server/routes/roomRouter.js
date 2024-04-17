@@ -1,7 +1,7 @@
 import { Router } from "express"
 
 // Controllers
-import { createRoom, deleteRooms, getRooms, updateRooms } from "../controllers/room.js"
+import { createRoom, deleteRooms, getRooms, getUserRooms, updateRooms } from "../controllers/room.js"
 
 // Middleware
 import auth from "../middleware/auth.js";
@@ -14,4 +14,6 @@ roomRouter.post('/', auth, createRoom);
 roomRouter.get('/', getRooms);
 roomRouter.delete('/:roomId',auth,checkAccess(roomPermissions.delete), deleteRooms);
 roomRouter.patch('/:roomId', auth,checkAccess(roomPermissions.update),updateRooms);
+roomRouter.get('/user/:uid', auth, getUserRooms);
+
 export default roomRouter;
