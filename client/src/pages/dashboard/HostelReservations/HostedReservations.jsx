@@ -4,6 +4,7 @@ import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import { useValue } from '../../../context/ContextProvider';
 import moment from 'moment';
 import { grey } from '@mui/material/colors';
+import { useTheme } from '@mui/material/styles'
 
 // Actions
 import { getUserRooms } from '../../../actions/room';
@@ -13,6 +14,9 @@ import HomestayDropdown from '../../../components/HomestayDropdown';
 import { getHomestayBookings } from '../../../actions/booking';
 
 const HostedReservations = ({ setSelectedLink, link }) => {
+    const theme = useTheme();
+    const isDark = theme.palette.mode === 'dark';
+
     const columns = useMemo(() => [
         { field: '_id', headerName: 'Booking ID', width: 220 },
         {
@@ -61,17 +65,6 @@ const HostedReservations = ({ setSelectedLink, link }) => {
         fetchData()
     }, [])
 
-    // const compare = (a, b) => {
-    //     if(a.checkIn < b.checkIn) {
-    //         return -1
-    //     }
-    //     else if(a.checkIn == b.checkIn) 
-    //     {
-    //         if(a.checkOut < b.checkOut) {
-    //             return -1
-    //         }
-    //     }
-    // }
     const compare = (a, b) => {
         if (a.checkIn < b.checkIn) {
             return -1;
@@ -105,10 +98,6 @@ const HostedReservations = ({ setSelectedLink, link }) => {
         fetchData()
     }, [selectedHomestay])
 
-    // useEffect(() => {
-    //     console.log(homestays);
-    // }, [homestays])
-
     return (
         <>
             <Box
@@ -132,6 +121,7 @@ const HostedReservations = ({ setSelectedLink, link }) => {
                     homestays={homestays}
                     selectedHomestay={selectedHomestay}
                     setSelectedHomestay={(homestay) => setSelectedHomestay(homestay)}
+                    isDark={isDark}
                 />
 
                 <DataGrid
