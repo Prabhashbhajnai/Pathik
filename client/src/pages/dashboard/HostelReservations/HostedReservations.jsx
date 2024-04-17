@@ -72,6 +72,21 @@ const HostedReservations = ({ setSelectedLink, link }) => {
     //         }
     //     }
     // }
+    const compare = (a, b) => {
+        if (a.checkIn < b.checkIn) {
+            return -1;
+        } else if (a.checkIn > b.checkIn) {
+            return 1;
+        } else { // a.checkIn === b.checkIn
+            if (a.checkOut < b.checkOut) {
+                return -1;
+            } else if (a.checkOut > b.checkOut) {
+                return 1;
+            } else {
+                return 0; // a.checkIn === b.checkIn and a.checkOut === b.checkOut
+            }
+        }
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -81,10 +96,8 @@ const HostedReservations = ({ setSelectedLink, link }) => {
             dispatch({ type: 'START_LOADING' })
             const bookings = await getHomestayBookings(selectedHomestay?._id, currentUser?.token)
 
-            console.log(bookings);
-            if (bookings) {
-                setHomestayBookings(bookings)
-            }
+            if (bookings)
+                setHomestayBookings(bookings.sort(compare))
 
             dispatch({ type: 'END_LOADING' })
         }
