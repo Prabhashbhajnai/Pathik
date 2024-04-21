@@ -41,9 +41,25 @@ const PointsOfInterest = () => {
         setSidebarProps({ width: '30%', deg: '180deg' })
 
         // Get the current location of the user
+
+        // dummy function to make the next functin work
         navigator.geolocation.getCurrentPosition((position) => {
-            setCurrentLocation([position.coords.latitude, position.coords.longitude])
+            
         })
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                setCurrentLocation([position.coords.latitude, position.coords.longitude]);
+            },
+            (error) => {
+                console.error("Error getting current position:", error);
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 5000, // milliseconds
+                maximumAge: 0
+            }
+        );
     }, [])
 
     // const geoapifyUrl = `https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}.png?apiKey=${Key}`;

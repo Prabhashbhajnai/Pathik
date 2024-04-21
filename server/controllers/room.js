@@ -22,3 +22,10 @@ export const updateRooms = tryCatch(async (req, res)=>{
   const updateRoom = await Room.findByIdAndUpdate(req.params.roomId, req.body, {new:true})
   res.status(200).json({success:true, result:updateRoom})
 })
+
+// get room by uploader id
+export const getUserRooms = tryCatch(async (req, res) => {
+  const rooms = await Room.find({ uid: req.params.uid });
+
+  res.status(200).json({ success: true, result: rooms });
+})

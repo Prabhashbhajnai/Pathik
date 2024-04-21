@@ -65,7 +65,7 @@ const Booking = () => {
             roomImg: room.images[0],
             price: room.price,
             checkIn: daysBooked[0],
-            checkOut: daysBooked[daysBooked.length - 1],
+            checkOut: daysBooked[daysBooked.length - 1].addDays(1),
             amount: room.price * daysBooked.length,
             daysOfStay: daysBooked,
             roomsAvailable: room.roomsAvailable
@@ -84,7 +84,7 @@ const Booking = () => {
             location: room.location,
             roomImg: room.roomImg,
             checkIn: daysBooked[0],
-            checkOut: daysBooked[daysBooked.length - 1],
+            checkOut: daysBooked[daysBooked.length - 1].addDays(1),
             amount: room.price * daysBooked.length,
             daysOfStay: daysBooked,
             roomsAvailable: room.roomsAvailable
